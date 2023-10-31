@@ -61,22 +61,21 @@ jobs:
         runs-on: ubuntu-latest
         needs: Build-test-deploy
         steps:         
-        - name: clone repository
-          id: clone
-          uses: actions/checkout@v3  ### the first step clones our repo into the runner. 
+         - name: clone repository
+           id: clone
+           uses: actions/checkout@v3  ### the first step clones our repo into the runner. 
 
-        - name: install and setup java with maven 
-          id: javainstall
-          uses: actions/setup-java@v3
-          with:
+         - name: install and setup java with maven 
+           id: javainstall
+           uses: actions/setup-java@v3
+           with:
             distribution: 'adopt'
             java-version: '11'
-        - name: Artifact download 
-          uses: actions/download-artifact@v3
-          with:
+         - name: Artifact download 
+           uses: actions/download-artifact@v3
+           with:
             name:  xashy-webapp
-        - name: deploy artifact to tomcat 
-          run:      
+             
         
         
 
