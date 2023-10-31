@@ -36,8 +36,8 @@ jobs:
               with:
                 server_address: smtp.gmail.com
                 server_port: 465
-                username: jayakuma998
-                password: Ilovebebexashy123!@
+                username: 
+                password: 
                 subject: GitHub Actions - Code Analysis Passed
             # List of recipients separated by comma
                 to: akumajunior9@gmail.com
@@ -50,8 +50,8 @@ jobs:
               with:
                 server_address: smtp.gmail.com
                 server_port: 465
-                username: jayakuma998
-                password: Ilovebebexashy123!@
+                username: 
+                password: 
                 subject: GitHub Actions - Code Analysis Failed
                 to: akumajunior9@gmail.com
                 from: YourName <noreply@example.com>
