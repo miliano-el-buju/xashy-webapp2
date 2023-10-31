@@ -23,6 +23,15 @@ jobs:
             - name: code build with maven 
               run:  mvn package   
 
+   ### artifact upload --->>> when an artifact is created , and the job is done on the runner , AU helps upload that away from the runner into github.
+
+            - name: upload maven artifact 
+              uses: actions/upload-artifact@v3
+              with:
+                name: xashy-webapp
+                path: target/*.war
+
+        
 
            
      
