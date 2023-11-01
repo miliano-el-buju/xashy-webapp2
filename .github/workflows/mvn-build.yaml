@@ -18,10 +18,13 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11' 
+        
+    - name: Run SonarQube analysis
+      run: mvn sonar:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 
     - name: code build with maven 
       run: mvn package   
-
+       
     - name: Notify Slack
       uses: 8398a7/action-slack@v3
       if: always() # Pick up events even if the job fails or is canceled.
