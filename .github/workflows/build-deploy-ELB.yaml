@@ -35,4 +35,29 @@ jobs:
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+   ### github actions should authenticate into aws using accesss key details provided      
+    - name: Authenticate to AWS 
+      uses: configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
+        aws-secret-access-key: ${{secrets.AWS_SECRET_KEY}}
+        aws-region: ${{secrets.AWS_REGION}}  
+
+    ### artifact should be copied into an s3 bucket 
+     
+    - name: Copy artifact to s3 
+      run: aws s3 cp target/*war s3://xashywebapp-bucket
+          
+    - name: create an application version 
+      run: |
+        aws elasticbeanstalk create-application-version \
+        --application-name xashy-webapp \
+        --source-bundle S3Bucket="xashywebapp-bucket",S3Key="xashy-webapp.war" \
+        --version-label "ver-${{ github.sha }}" \
+        --description "commit-sha-${{ github.sha }}"
+
+    - name: deploy the app to elastic beanstalk enviroment 
+      run: aws elasticbeanstalk update-environment --environment-name xashy-webapp-env --version-label "ver-${{ github.sha }}" --version-label "ver-${{ github.sha }}" 
+          
+       
 
