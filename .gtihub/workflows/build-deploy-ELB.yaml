@@ -1,0 +1,35 @@
+name: Build-Deploy-TO-ELB
+
+### specify the event trigger
+on:
+  push:
+    branches: 
+      - main
+  workflow_dispatch: 
+
+jobs:
+
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: clone repository
+      uses: actions/checkout@v2
+    - name: install java and setup maven
+      uses: actions/setup-java@v3  
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+     ### code analysis with sonarqube   
+    - name: sonarqube analysis 
+      run: mvn sonar:sonar -Dsonar.projectKey=${{secrets.SONAR_PROJECT_KEY}} -Dsonar.host.url=${{secrets.SONAR_HOST_URL}} -Dsonar.login=${{secrets.SONAR_LOGIN_TOKEN}}
+    ### perform code build with maven
+    - name: maven build
+      run: mvn clean package 
+
+    #### publish the artifact to an artifact repository(Github packages)....(((( where artifact are stored.....jfrog, aws code artifactory))))  
+    - name: Upload to artifact repo 
+      run: mvn --batch-mode deploy
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+
