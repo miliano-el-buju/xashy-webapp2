@@ -1,4 +1,4 @@
-name: Build-Deploy-TO-ELB
+name: bb Build-Deploy-TO-ELB
 
 ### specify the event trigger
 on:
